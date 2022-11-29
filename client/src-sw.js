@@ -41,7 +41,6 @@ const staticResourcesCache = new StaleWhileRevalidate({
   ],
 });
 
-
 warmStrategyCache({
   urls: ['/index.html', '/'],
   strategy: pageCache,
