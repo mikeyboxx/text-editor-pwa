@@ -53,5 +53,4 @@ registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 registerRoute(({ request }) => request.destination === 'image', imageCache);
 registerRoute(({ request }) => request.destination === 'style' || request.destination === 'script', staticResourcesCache);
 
-registerRoute();
 
