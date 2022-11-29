@@ -19,6 +19,20 @@ const pageCache = new CacheFirst({
   ],
 });
 
+const imageCache = new CacheFirst({
+  cacheName: 'my-image-cache',
+  plugins: [
+    new CacheableResponsePlugin({
+      statuses: [0, 200],
+    }),
+    new ExpirationPlugin({
+      maxEntries: 60,
+      maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+    }),
+  ],
+});
+
+
 warmStrategyCache({
   urls: ['/index.html', '/'],
   strategy: pageCache,
@@ -27,4 +41,7 @@ warmStrategyCache({
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // TODO: Implement asset caching
+registerRoute(({ request }) => request.destination === 'image', imageCache);
+
 registerRoute();
+
