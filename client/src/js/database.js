@@ -1,5 +1,6 @@
 import { openDB } from 'idb';
 
+// checks if database already exists, if not then create the database and object store
 const initdb = async () =>
   openDB('jateDB', 1, {
     upgrade(db) {
@@ -12,7 +13,8 @@ const initdb = async () =>
     },
   });
 
-// TODO: Add logic to a method that accepts some content and adds it to the database
+// checks the object store if object exists.
+// if objects exists then overwrite with content, otherwise create a new object
 export const putDb = async (content) => {
   try {
     const jateDb = await openDB('jateDB', 1);
@@ -33,15 +35,16 @@ export const putDb = async (content) => {
   }
 }
 
-// TODO: Add logic for a method that gets all the content from the database
+// retrieves the object from the object store, if not found return null
 export const getDb = async () => {
   try {
     const jateDb = await openDB('jateDB', 1);
     const tx = jateDb.transaction('jate', 'readonly');
     const store = tx.objectStore('jate');
 
-    const request = await store.getAll(1);
-    
+    const request = await store.get(1);
+    if (request) console.log('🚀 - data retrieved from the database'); 
+
     return !request ? null : request.content;
   } 
   catch (err) {

@@ -7,6 +7,7 @@ const { precacheAndRoute } = require('workbox-precaching/precacheAndRoute');
 
 precacheAndRoute(self.__WB_MANIFEST);
 
+// cache any page requests
 const pageCache = new CacheFirst({
   cacheName: 'page-cache',
   plugins: [
@@ -19,6 +20,7 @@ const pageCache = new CacheFirst({
   ],
 });
 
+// cache all image files
 const imageCache = new CacheFirst({
   cacheName: 'my-image-cache',
   plugins: [
@@ -32,6 +34,7 @@ const imageCache = new CacheFirst({
   ],
 });
 
+// cache all css and javascript files
 const staticResourcesCache = new StaleWhileRevalidate({
   cacheName: 'static-resources',
   plugins: [
@@ -41,6 +44,7 @@ const staticResourcesCache = new StaleWhileRevalidate({
   ],
 });
 
+// use IndexedDB to implement a backup caching strategy for any page requests
 warmStrategyCache({
   urls: ['/index.html', '/'],
   strategy: pageCache,
