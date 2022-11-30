@@ -16,7 +16,9 @@ const initdb = async () =>
 export const putDb = async (content) => {
   try {
     const jateDb = await openDB('jateDB', 1);
-    const store = jateDb.transaction('jate', 'readwrite').objectStore('jate');
+    const tx = jateDb.transaction('jate', 'readwrite');
+    const store = tx.objectStore('jate');
+
     const request = await store.get(1);
     
     if (!request)
@@ -35,8 +37,11 @@ export const putDb = async (content) => {
 export const getDb = async () => {
   try {
     const jateDb = await openDB('jateDB', 1);
-    const store = jateDb.transaction('jate', 'readonly').objectStore('jate');
-    const request = await store.get(1);
+    const tx = jateDb.transaction('jate', 'readonly');
+    const store = tx.objectStore('jate');
+
+    const request = await store.getAll(1);
+    
     return !request ? null : request.content;
   } 
   catch (err) {
