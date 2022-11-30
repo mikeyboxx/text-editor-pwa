@@ -42,7 +42,7 @@ module.exports = () => {
           },
           {
             src: path.resolve('./src/images/favicon.ico'),
-            sizes: [96, 128, 192, 256, 384, 512] 
+            sizes: [96, 128, 256, 384, 512] 
           },
         ]
       })
